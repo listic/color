@@ -1,6 +1,6 @@
 # -*- ruby encoding: utf-8 -*-
 
-class Color::RGB
+class Colour::RGB
   # This namespace contains some RGB metallic colours suggested by Jim
   # Freeze.
   module Metallic; end
@@ -8,7 +8,7 @@ class Color::RGB
   class << self
     private
     def metallic(rgb, *names)
-      __named_color(Metallic, new(*rgb), *names)
+      __named_colour(Metallic, new(*rgb), *names)
     end
   end
 

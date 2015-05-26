@@ -1,30 +1,30 @@
-require 'color/palette'
+require 'colour/palette'
 
-# Generates a monochromatic constrasting colour palette for background and
+# Generates a monochromatic constrasting color palette for background and
 # foreground. What does this mean?
 #
-# Monochromatic: A single colour is used to generate the base palette, and
-# this colour is lightened five times and darkened five times to provide
+# Monochromatic: A single color is used to generate the base palette, and
+# this color is lightened five times and darkened five times to provide
 # eleven distinct colours.
 #
-# Contrasting: The foreground is also generated as a monochromatic colour
+# Contrasting: The foreground is also generated as a monochromatic color
 # palette; however, all generated colours are tested to see that they are
 # appropriately contrasting to ensure maximum readability of the foreground
 # against the background.
-class Color::Palette::MonoContrast
-  # Hash of CSS background colour values.
+class Colour::Palette::MonoContrast
+  # Hash of CSS background color values.
   #
   # This is always 11 values:
   #
-  # 0::       The starting colour.
+  # 0::       The starting color.
   # +1..+5::  Lighter colours.
   # -1..-5::  Darker colours.
   attr_reader :background
-  # Hash of CSS foreground colour values.
+  # Hash of CSS foreground color values.
   #
   # This is always 11 values:
   #
-  # 0::       The starting colour.
+  # 0::       The starting color.
   # +1..+5::  Lighter colours.
   # -1..-5::  Darker colours.
   attr_reader :foreground
@@ -50,15 +50,15 @@ class Color::Palette::MonoContrast
     regenerate(@background[0], @foreground[0])
   end
 
-  DEFAULT_MINIMUM_COLOR_DIFF = (500.0 / 255.0)
+  DEFAULT_MINIMUM_COLOUR_DIFF = (500.0 / 255.0)
 
-  # The minimum colour difference between the background and the foreground,
+  # The minimum color difference between the background and the foreground,
   # and must be between 0..3. Setting this value will regenerate the palette
   # based on the base colours. The default value for this is 500 / 255.0.
-  attr_reader :minimum_color_diff
-  def minimum_color_diff=(cd) #:nodoc:
-    @minimum_color_diff = if cd.nil?
-                            DEFAULT_MINIMUM_COLOR_DIFF
+  attr_reader :minimum_colour_diff
+  def minimum_colour_diff=(cd) #:nodoc:
+    @minimum_colour_diff = if cd.nil?
+                            DEFAULT_MINIMUM_COLOUR_DIFF
                           elsif cd > 3.0
                             3.0
                           elsif cd < 0.0
@@ -72,11 +72,11 @@ class Color::Palette::MonoContrast
   # Generate the initial palette.
   def initialize(background, foreground = nil)
     @minimum_brightness_diff = DEFAULT_MINIMUM_BRIGHTNESS_DIFF
-    @minimum_color_diff = DEFAULT_MINIMUM_COLOR_DIFF
+    @minimum_colour_diff = DEFAULT_MINIMUM_COLOUR_DIFF
     regenerate(background, foreground)
   end
 
-  # Generate the colour palettes.
+  # Generate the color palettes.
   def regenerate(background, foreground = nil)
     foreground ||= background
     background = background.to_rgb
@@ -110,11 +110,11 @@ class Color::Palette::MonoContrast
     @foreground[+5] = calculate_foreground(@background[+5], foreground)
   end
 
-  # Given a background colour and a foreground colour, modifies the
-  # foreground colour so that it will have enough contrast to be seen
-  # against the background colour.
+  # Given a background color and a foreground color, modifies the
+  # foreground color so that it will have enough contrast to be seen
+  # against the background color.
   #
-  # Uses #mininum_brightness_diff and #minimum_color_diff.
+  # Uses #mininum_brightness_diff and #minimum_colour_diff.
   def calculate_foreground(background, foreground)
     nfg = nil
     # Loop through brighter and darker versions of the foreground color. The
@@ -135,16 +135,16 @@ class Color::Palette::MonoContrast
         nbd = dbd
       end
 
-      ncd = color_diff(background, nfg)
+      ncd = colour_diff(background, nfg)
 
-      break if nbd >= @minimum_brightness_diff and ncd >= @minimum_color_diff
+      break if nbd >= @minimum_brightness_diff and ncd >= @minimum_colour_diff
     end
     nfg
   end
 
   # Returns the absolute difference between the brightness levels of two
   # colours. This will be a decimal value between 0 and 1. W3C accessibility
-  # guidelines for {colour contrast}[http://www.w3.org/TR/AERT#color-contrast]
+  # guidelines for {color contrast}[http://www.w3.org/TR/AERT#colour-contrast]
   # suggest that this value be at least approximately 0.49 (125 / 255.0) for
   # proper contrast.
   def brightness_diff(c1, c2)
@@ -152,10 +152,10 @@ class Color::Palette::MonoContrast
   end
 
   # Returns the contrast between to colours, a decimal value between 0 and
-  # 3. W3C accessibility guidelines for {colour
-  # contrast}[http://www.w3.org/TR/AERT#color-contrast] suggest that this
+  # 3. W3C accessibility guidelines for {color
+  # contrast}[http://www.w3.org/TR/AERT#colour-contrast] suggest that this
   # value be at least approximately 1.96 (500 / 255.0) for proper contrast.
-  def color_diff(c1, c2)
+  def colour_diff(c1, c2)
     r = (c1.r - c2.r).abs
     g = (c1.g - c2.g).abs
     b = (c1.b - c2.b).abs

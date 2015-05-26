@@ -1,8 +1,8 @@
-class Color::RGB
+class Colour::RGB
   class << self
     private
     def named(rgb, *names)
-      __named_color(self, new(*rgb), *names)
+      __named_colour(self, new(*rgb), *names)
     end
   end
 
@@ -164,4 +164,4 @@ class Color::RGB
   named [0x9a, 0xcd, 0x32], :YellowGreen
 end
 
-require 'color/rgb/metallic'
+require 'colour/rgb/metallic'

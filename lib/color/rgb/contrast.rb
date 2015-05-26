@@ -1,6 +1,6 @@
 # -*- ruby encoding: utf-8 -*-
 
-class Color::RGB
+class Colour::RGB
   # Outputs how much contrast this color has with another RGB color.
   # Computes the same regardless of which one is considered foreground. If
   # the other color does not have a #to_rgb method, this will throw an
@@ -47,7 +47,7 @@ class Color::RGB
       ((other.b - self.b) ** 2)) ** 0.5) / 1.7320508075688772
   end
 
-  # Difference in the two colors' hue
+  # Difference in the two colours' hue
   def diff_hue(other)
     other = other.to_rgb
     ((self.r - other.r).abs +

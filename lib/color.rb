@@ -1,9 +1,9 @@
-# :title: Color -- Colour Management with Ruby
+# :title: Colour -- Colour Management with Ruby
 # :main: README.rdoc
 
 # = Colour Management with Ruby
-module Color
-  COLOR_VERSION = '1.7.1'
+module Colour
+  COLOUR_VERSION = '1.7.1'
 
   class RGB; end
   class CMYK; end
@@ -13,11 +13,11 @@ module Color
 
   # The maximum "resolution" for colour math; if any value is less than or
   # equal to this value, it is treated as zero.
-  COLOR_EPSILON = 1e-5
+  COLOUR_EPSILON = 1e-5
   # The tolerance for comparing the components of two colours. In general,
   # colours are considered equal if all of their components are within this
   # tolerance value of each other.
-  COLOR_TOLERANCE = 1e-4
+  COLOUR_TOLERANCE = 1e-4
 
   # Compares the +other+ colour to this one. The +other+ colour will be
   # coerced to the same type as the current colour. Such converted colour
@@ -28,10 +28,10 @@ module Color
   # +NoMethodError+ exception will be raised.
   #
   # All values are compared as floating-point values, so two colours will be
-  # reported equivalent if all component values are within COLOR_TOLERANCE
+  # reported equivalent if all component values are within COLOUR_TOLERANCE
   # of each other.
   def ==(other)
-    Color.equivalent?(self, other)
+    Colour.equivalent?(self, other)
   end
 
   # The primary name for the colour.
@@ -50,24 +50,24 @@ module Color
   alias_method :name=, :names=
 end
 
-class << Color
-  # Returns +true+ if the value is less than COLOR_EPSILON.
+class << Colour
+  # Returns +true+ if the value is less than COLOUR_EPSILON.
   def near_zero?(value)
-    (value.abs <= Color::COLOR_EPSILON)
+    (value.abs <= Colour::COLOUR_EPSILON)
   end
 
-  # Returns +true+ if the value is within COLOR_EPSILON of zero or less than
+  # Returns +true+ if the value is within COLOUR_EPSILON of zero or less than
   # zero.
   def near_zero_or_less?(value)
     (value < 0.0 or near_zero?(value))
   end
 
-  # Returns +true+ if the value is within COLOR_EPSILON of one.
+  # Returns +true+ if the value is within COLOUR_EPSILON of one.
   def near_one?(value)
     near_zero?(value - 1.0)
   end
 
-  # Returns +true+ if the value is within COLOR_EPSILON of one or more than
+  # Returns +true+ if the value is within COLOUR_EPSILON of one or more than
   # one.
   def near_one_or_more?(value)
     (value > 1.0 or near_one?(value))
@@ -75,7 +75,7 @@ class << Color
 
   # Returns +true+ if the two values provided are near each other.
   def near?(x, y)
-    (x - y).abs <= Color::COLOR_TOLERANCE
+    (x - y).abs <= Colour::COLOUR_TOLERANCE
   end
 
   # Returns +true+ if the two colours are roughly equivalent. If colour
@@ -130,55 +130,55 @@ class << Color
   alias normalize_16bit normalize_word
 end
 
-require 'color/rgb'
-require 'color/cmyk'
-require 'color/grayscale'
-require 'color/hsl'
-require 'color/yiq'
-require 'color/css'
+require 'colour/rgb'
+require 'colour/cmyk'
+require 'colour/grayscale'
+require 'colour/hsl'
+require 'colour/yiq'
+require 'colour/css'
 
-class << Color
+class << Colour
   def const_missing(name) #:nodoc:
     case name
-    when "VERSION", :VERSION, "COLOR_TOOLS_VERSION", :COLOR_TOOLS_VERSION
-      warn "Color::#{name} has been deprecated. Use Color::COLOR_VERSION instead."
-      Color::COLOR_VERSION
+    when "VERSION", :VERSION, "COLOUR_TOOLS_VERSION", :COLOUR_TOOLS_VERSION
+      warn "Colour::#{name} has been deprecated. Use Colour::COLOUR_VERSION instead."
+      Colour::COLOUR_VERSION
     else
-      if Color::RGB.const_defined?(name)
-        warn "Color::#{name} has been deprecated. Use Color::RGB::#{name} instead."
-        Color::RGB.const_get(name)
+      if Colour::RGB.const_defined?(name)
+        warn "Colour::#{name} has been deprecated. Use Colour::RGB::#{name} instead."
+        Colour::RGB.const_get(name)
       else
         super
       end
     end
   end
 
-  # Provides a thin veneer over the Color module to make it seem like this
-  # is Color 0.1.0 (a class) and not Color 1.4 (a module). This
+  # Provides a thin veneer over the Colour module to make it seem like this
+  # is Colour 0.1.0 (a class) and not Colour 1.4 (a module). This
   # "constructor" will be removed in the future.
   #
   # mode = :hsl::   +values+ must be an array of [ hue deg, sat %, lum % ].
-  #                 A Color::HSL object will be created.
+  #                 A Colour::HSL object will be created.
   # mode = :rgb::   +values+ will either be an HTML-style colour string or
   #                 an array of [ red, green, blue ] (range 0 .. 255). A
-  #                 Color::RGB object will be created.
+  #                 Colour::RGB object will be created.
   # mode = :cmyk::  +values+ must be an array of [ cyan %, magenta %, yellow
-  #                 %, black % ]. A Color::CMYK object will be created.
+  #                 %, black % ]. A Colour::CMYK object will be created.
   def new(values, mode = :rgb)
-    warn "Color.new has been deprecated. Use Color::#{mode.to_s.upcase}.new instead."
-    color = case mode
+    warn "Colour.new has been deprecated. Use Colour::#{mode.to_s.upcase}.new instead."
+    colour = case mode
             when :hsl
-              Color::HSL.new(*values)
+              Colour::HSL.new(*values)
             when :rgb
               values = [ values ].flatten
               if values.size == 1
-                Color::RGB.from_html(*values)
+                Colour::RGB.from_html(*values)
               else
-                Color::RGB.new(*values)
+                Colour::RGB.new(*values)
               end
             when :cmyk
-              Color::CMYK.new(*values)
+              Colour::CMYK.new(*values)
             end
-    color.to_hsl
+    colour.to_hsl
   end
 end
