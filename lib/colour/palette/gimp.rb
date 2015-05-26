@@ -1,7 +1,7 @@
 require 'colour/palette'
 
 # A class that can read a GIMP (GNU Image Manipulation Program) palette file
-# and provide a Hash-like interface to the contents. GIMP color palettes
+# and provide a Hash-like interface to the contents. GIMP colour palettes
 # are RGB values only.
 #
 # Because two or more entries in a GIMP palette may have the same name, all
@@ -65,14 +65,14 @@ class Colour::Palette::Gimp
     end
   end
 
-  # Provides the color or colours at the provided selectors.
+  # Provides the colour or colours at the provided selectors.
   def values_at(*selectors)
     @colours.values_at(*selectors)
   end
 
-  # If a Numeric +key+ is provided, the single color value at that position
-  # will be returned. If a String +key+ is provided, the color set (an
-  # array) for that color name will be returned.
+  # If a Numeric +key+ is provided, the single colour value at that position
+  # will be returned. If a String +key+ is provided, the colour set (an
+  # array) for that colour name will be returned.
   def [](key)
     if key.kind_of?(Numeric)
       @colours[key]
@@ -81,12 +81,12 @@ class Colour::Palette::Gimp
     end
   end
 
-  # Loops through each color.
+  # Loops through each colour.
   def each
     @colours.each { |el| yield el }
   end
 
-  # Loops through each named color set.
+  # Loops through each named colour set.
   def each_name #:yields colour_name, colour_set:#
     @names.each { |colour_name, colour_set| yield colour_name, colour_set }
   end

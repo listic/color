@@ -1,15 +1,15 @@
-# A color object representing YIQ (NTSC) color encoding.
+# A colour object representing YIQ (NTSC) colour encoding.
 class Colour::YIQ
   include Colour
 
-  # Creates a YIQ color object from fractional values 0 .. 1.
+  # Creates a YIQ colour object from fractional values 0 .. 1.
   #
   #   Colour::YIQ.new(0.3, 0.2, 0.1)
   def self.from_fraction(y = 0, i = 0, q = 0, &block)
     new(y, i, q, 1.0, &block)
   end
 
-  # Creates a YIQ color object from percentages 0 .. 100.
+  # Creates a YIQ colour object from percentages 0 .. 100.
   #
   #   Colour::YIQ.new(10, 20, 30)
   def initialize(y = 0, i = 0, q = 0, radix = 100.0, &block) # :yields self:

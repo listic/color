@@ -1,9 +1,9 @@
 # -*- ruby encoding: utf-8 -*-
 
 class Colour::RGB
-  # Outputs how much contrast this color has with another RGB color.
+  # Outputs how much contrast this colour has with another RGB colour.
   # Computes the same regardless of which one is considered foreground. If
-  # the other color does not have a #to_rgb method, this will throw an
+  # the other colour does not have a #to_rgb method, this will throw an
   # exception. Anything over about 0.22 should have a high likelihood of
   # being legible, but the larger the difference, the more contrast.
   # Otherwise, to be safe go with something > 0.3
@@ -39,7 +39,7 @@ class Colour::RGB
     (br1 - br2).abs / 1000.0;
   end
 
-  # Provides the euclidean distance between the two color values
+  # Provides the euclidean distance between the two colour values
   def diff_euclidean(other)
     other = other.to_rgb
     ((((other.r - self.r) ** 2) +

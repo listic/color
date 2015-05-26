@@ -1,11 +1,11 @@
-# An CMYK color object. CMYK (cyan, magenta, yellow, and black) colours are
-# based on additive percentages of ink. A CMYK color of (0.3, 0, 0.8, 0.3)
+# An CMYK colour object. CMYK (cyan, magenta, yellow, and black) colours are
+# based on additive percentages of ink. A CMYK colour of (0.3, 0, 0.8, 0.3)
 # would be mixed from 30% cyan, 0% magenta, 80% yellow, and 30% black.
-# Primarily used in four-color printing processes.
+# Primarily used in four-colour printing processes.
 class Colour::CMYK
   include Colour
 
-  # The format of a DeviceCMYK color for PDF. In color-tools 2.0 this will
+  # The format of a DeviceCMYK colour for PDF. In colour-tools 2.0 this will
   # be removed from this package and added back as a modification by the
   # PDF::Writer package.
   PDF_FORMAT_STR = "%.3f %.3f %.3f %.3f %s"
@@ -16,14 +16,14 @@ class Colour::CMYK
   end
 
   class << self
-    # Creates a CMYK color object from fractional values 0..1.
+    # Creates a CMYK colour object from fractional values 0..1.
     #
     #   Colour::CMYK.from_fraction(0.3, 0, 0.8, 0.3)
     def from_fraction(c = 0, m = 0, y = 0, k = 0, &block)
       new(c, m, y, k, 1.0, &block)
     end
 
-    # Creates a CMYK color object from percentages. Internally, the color is
+    # Creates a CMYK colour object from percentages. Internally, the colour is
     # managed as fractional values 0..1.
     #
     #   Colour::CMYK.new(30, 0, 80, 30)
@@ -32,7 +32,7 @@ class Colour::CMYK
     end
   end
 
-  # Creates a CMYK color object from percentages. Internally, the color is
+  # Creates a CMYK colour object from percentages. Internally, the colour is
   # managed as fractional values 0..1.
   #
   #   Colour::CMYK.new(30, 0, 80, 30)
@@ -41,59 +41,59 @@ class Colour::CMYK
     block.call(self) if block
   end
 
-  # Present the color as a DeviceCMYK fill color string for PDF. This will
-  # be removed from the default package in color-tools 2.0.
+  # Present the colour as a DeviceCMYK fill colour string for PDF. This will
+  # be removed from the default package in colour-tools 2.0.
   def pdf_fill
     PDF_FORMAT_STR % [ @c, @m, @y, @k, "k" ]
   end
 
-  # Present the color as a DeviceCMYK stroke color string for PDF. This
-  # will be removed from the default package in color-tools 2.0.
+  # Present the colour as a DeviceCMYK stroke colour string for PDF. This
+  # will be removed from the default package in colour-tools 2.0.
   def pdf_stroke
     PDF_FORMAT_STR % [ @c, @m, @y, @k, "K" ]
   end
 
-  # Present the color as an RGB HTML/CSS color string (e.g., "#aabbcc").
+  # Present the colour as an RGB HTML/CSS colour string (e.g., "#aabbcc").
   # Note that this will perform a #to_rgb operation using the default
   # conversion formula.
   def html
     to_rgb.html
   end
 
-  # Present the color as an RGB HTML/CSS color string (e.g., "rgb(0%, 50%,
+  # Present the colour as an RGB HTML/CSS colour string (e.g., "rgb(0%, 50%,
   # 100%)"). Note that this will perform a #to_rgb operation using the
   # default conversion formula.
   def css_rgb
     to_rgb.css_rgb
   end
 
-  # Present the color as an RGBA (with alpha) HTML/CSS color string (e.g.,
+  # Present the colour as an RGBA (with alpha) HTML/CSS colour string (e.g.,
   # "rgb(0%, 50%, 100%, 1)"). Note that this will perform a #to_rgb
   # operation using the default conversion formula.
   def css_rgba
     to_rgb.css_rgba
   end
 
-  # Present the color as an HSL HTML/CSS color string (e.g., "hsl(180,
+  # Present the colour as an HSL HTML/CSS colour string (e.g., "hsl(180,
   # 25%, 35%)"). Note that this will perform a #to_hsl operation using the
   # default conversion formula.
   def css_hsl
     to_hsl.css_hsl
   end
 
-  # Present the color as an HSLA (with alpha) HTML/CSS color string (e.g.,
+  # Present the colour as an HSLA (with alpha) HTML/CSS colour string (e.g.,
   # "hsla(180, 25%, 35%, 1)"). Note that this will perform a #to_hsl
   # operation using the default conversion formula.
   def css_hsla
     to_hsl.css_hsla
   end
 
-  # Converts the CMYK color to RGB. Most color experts strongly suggest
+  # Converts the CMYK colour to RGB. Most colour experts strongly suggest
   # that this is not a good idea (some even suggesting that it's a very bad
   # idea). CMYK represents additive percentages of inks on white paper,
-  # whereas RGB represents mixed color intensities on a black screen.
+  # whereas RGB represents mixed colour intensities on a black screen.
   #
-  # However, the color conversion can be done, and there are two different
+  # However, the colour conversion can be done, and there are two different
   # methods for the conversion that provide slightly different results.
   # Adobe PDF conversions are done with the first form.
   #
@@ -107,11 +107,11 @@ class Colour::CMYK
   #   g = 1.0 - (m * (1.0 - k) + k)
   #   b = 1.0 - (y * (1.0 - k) + k)
   #
-  # If we have a CMYK color of [33% 66% 83% 25%], the first method will
-  # give an approximate RGB color of (107, 23, 0) or #6b1700. The second
-  # method will give an approximate RGB color of (128, 65, 33) or #804121.
+  # If we have a CMYK colour of [33% 66% 83% 25%], the first method will
+  # give an approximate RGB colour of (107, 23, 0) or #6b1700. The second
+  # method will give an approximate RGB colour of (128, 65, 33) or #804121.
   # Which is correct? Although the colours may seem to be drastically
-  # different in the RGB color space, they are very similar colours,
+  # different in the RGB colour space, they are very similar colours,
   # differing mostly in intensity. The first is a darker, slightly redder
   # brown; the second is a lighter brown.
   #
@@ -120,7 +120,7 @@ class Colour::CMYK
   # #to_rgb.
   #
   # Future versions of Colour may offer other conversion mechanisms that
-  # offer greater color fidelity, including recognition of ICC color
+  # offer greater colour fidelity, including recognition of ICC colour
   # profiles.
   def to_rgb(use_adobe_method = false)
     if use_adobe_method
@@ -130,7 +130,7 @@ class Colour::CMYK
     end
   end
 
-  # Converts the CMYK color to a single greyscale value. There are
+  # Converts the CMYK colour to a single greyscale value. There are
   # undoubtedly multiple methods for this conversion, but only a minor
   # variant of the Adobe conversion method will be used:
   #
@@ -167,80 +167,80 @@ class Colour::CMYK
     to_rgb.to_hsl
   end
 
-  # Returns the cyan (C) component of the CMYK color as a percentage value.
+  # Returns the cyan (C) component of the CMYK colour as a percentage value.
   def cyan
     @c * 100.0
   end
-  # Returns the cyan (C) component of the CMYK color as a value in the
+  # Returns the cyan (C) component of the CMYK colour as a value in the
   # range 0.0 .. 1.0.
   def c
     @c
   end
-  # Sets the cyan (C) component of the CMYK color as a percentage value.
+  # Sets the cyan (C) component of the CMYK colour as a percentage value.
   def cyan=(cc)
     @c = Colour.normalize(cc / 100.0)
   end
-  # Sets the cyan (C) component of the CMYK color as a value in the range
+  # Sets the cyan (C) component of the CMYK colour as a value in the range
   # 0.0 .. 1.0.
   def c=(cc)
     @c = Colour.normalize(cc)
   end
 
-  # Returns the magenta (M) component of the CMYK color as a percentage
+  # Returns the magenta (M) component of the CMYK colour as a percentage
   # value.
   def magenta
     @m * 100.0
   end
-  # Returns the magenta (M) component of the CMYK color as a value in the
+  # Returns the magenta (M) component of the CMYK colour as a value in the
   # range 0.0 .. 1.0.
   def m
     @m
   end
-  # Sets the magenta (M) component of the CMYK color as a percentage value.
+  # Sets the magenta (M) component of the CMYK colour as a percentage value.
   def magenta=(mm)
     @m = Colour.normalize(mm / 100.0)
   end
-  # Sets the magenta (M) component of the CMYK color as a value in the
+  # Sets the magenta (M) component of the CMYK colour as a value in the
   # range 0.0 .. 1.0.
   def m=(mm)
     @m = Colour.normalize(mm)
   end
 
-  # Returns the yellow (Y) component of the CMYK color as a percentage
+  # Returns the yellow (Y) component of the CMYK colour as a percentage
   # value.
   def yellow
     @y * 100.0
   end
-  # Returns the yellow (Y) component of the CMYK color as a value in the
+  # Returns the yellow (Y) component of the CMYK colour as a value in the
   # range 0.0 .. 1.0.
   def y
     @y
   end
-  # Sets the yellow (Y) component of the CMYK color as a percentage value.
+  # Sets the yellow (Y) component of the CMYK colour as a percentage value.
   def yellow=(yy)
     @y = Colour.normalize(yy / 100.0)
   end
-  # Sets the yellow (Y) component of the CMYK color as a value in the range
+  # Sets the yellow (Y) component of the CMYK colour as a value in the range
   # 0.0 .. 1.0.
   def y=(kk)
     @y = Colour.normalize(kk)
   end
 
-  # Returns the black (K) component of the CMYK color as a percentage
+  # Returns the black (K) component of the CMYK colour as a percentage
   # value.
   def black
     @k * 100.0
   end
-  # Returns the black (K) component of the CMYK color as a value in the
+  # Returns the black (K) component of the CMYK colour as a value in the
   # range 0.0 .. 1.0.
   def k
     @k
   end
-  # Sets the black (K) component of the CMYK color as a percentage value.
+  # Sets the black (K) component of the CMYK colour as a percentage value.
   def black=(kk)
     @k = Colour.normalize(kk / 100.0)
   end
-  # Sets the black (K) component of the CMYK color as a value in the range
+  # Sets the black (K) component of the CMYK colour as a value in the range
   # 0.0 .. 1.0.
   def k=(kk)
     @k = Colour.normalize(kk)

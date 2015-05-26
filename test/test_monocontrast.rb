@@ -1,6 +1,6 @@
 # -*- ruby encoding: utf-8 -*-
 
-require 'color'
+require 'colour'
 require 'colour/palette/monocontrast'
 require 'minitest_helper'
 

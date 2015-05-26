@@ -11,7 +11,7 @@ Hoe.plugin :minitest
 Hoe.plugin :travis
 Hoe.plugin :email unless ENV['CI'] or ENV['TRAVIS']
 
-spec = Hoe.spec 'color' do
+spec = Hoe.spec 'colour' do
   developer('Austin Ziegler', 'halostatue@gmail.com')
   developer('Matt Lyon', 'matt@postsomnia.com')
 

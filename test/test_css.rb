@@ -1,4 +1,4 @@
-require 'color'
+require 'colour'
 require 'colour/css'
 require 'minitest_helper'
 

@@ -1,13 +1,13 @@
 # -*- ruby encoding: utf-8 -*-
 
-# An HSL color object. Internally, the hue (#h), saturation (#s), and
+# An HSL colour object. Internally, the hue (#h), saturation (#s), and
 # luminosity/lightness (#l) values are dealt with as fractional values in
 # the range 0..1.
 class Colour::HSL
   include Colour
 
   class << self
-    # Creates an HSL color object from fractional values 0..1.
+    # Creates an HSL colour object from fractional values 0..1.
     def from_fraction(h = 0.0, s = 0.0, l = 0.0, &block)
       new(h, s, l, 1.0, 1.0, &block)
     end
@@ -18,7 +18,7 @@ class Colour::HSL
     other.to_hsl
   end
 
-  # Creates an HSL color object from the standard values of degrees and
+  # Creates an HSL colour object from the standard values of degrees and
   # percentages (e.g., 145 deg, 30%, 50%).
   def initialize(h = 0, s = 0, l = 0, radix1 = 360.0, radix2 = 100.0, &block) # :yields self:
     @h = Colour.normalize(h / radix1)
@@ -27,38 +27,38 @@ class Colour::HSL
     block.call if block
   end
 
-  # Present the color as an HTML/CSS color string.
+  # Present the colour as an HTML/CSS colour string.
   def html
     to_rgb.html
   end
 
-  # Present the color as an RGB HTML/CSS color string (e.g., "rgb(0%, 50%,
+  # Present the colour as an RGB HTML/CSS colour string (e.g., "rgb(0%, 50%,
   # 100%)"). Note that this will perform a #to_rgb operation using the
   # default conversion formula.
   def css_rgb
     to_rgb.css_rgb
   end
 
-  # Present the color as an RGBA (with alpha) HTML/CSS color string (e.g.,
+  # Present the colour as an RGBA (with alpha) HTML/CSS colour string (e.g.,
   # "rgb(0%, 50%, 100%, 1)"). Note that this will perform a #to_rgb
   # operation using the default conversion formula.
   def css_rgba
     to_rgb.css_rgba
   end
 
-  # Present the color as an HSL HTML/CSS color string (e.g., "hsl(180,
+  # Present the colour as an HSL HTML/CSS colour string (e.g., "hsl(180,
   # 25%, 35%)").
   def css_hsl
     "hsl(%3.2f, %3.2f%%, %3.2f%%)" % [ hue, saturation, luminosity ]
   end
 
-  # Present the color as an HSLA (with alpha) HTML/CSS color string (e.g.,
+  # Present the colour as an HSLA (with alpha) HTML/CSS colour string (e.g.,
   # "hsla(180, 25%, 35%, 1)").
   def css_hsla
     "hsla(%3.2f, %3.2f%%, %3.2f%%, %3.2f)" % [ hue, saturation, luminosity, 1 ]
   end
 
-  # Converting from HSL to RGB. As with all color conversions, this is
+  # Converting from HSL to RGB. As with all colour conversions, this is
   # approximate at best. The code here is adapted from fvd and van Dam,
   # originally found at [1] (implemented similarly at [2]).
   #
@@ -94,7 +94,7 @@ class Colour::HSL
     to_rgb.to_cmyk
   end
 
-  # Returns the luminosity (#l) of the color.
+  # Returns the luminosity (#l) of the colour.
   def brightness
     @l
   end
@@ -103,15 +103,15 @@ class Colour::HSL
   end
   alias to_grayscale to_greyscale
 
-  # Returns the hue of the color in degrees.
+  # Returns the hue of the colour in degrees.
   def hue
     @h * 360.0
   end
-  # Returns the hue of the color in the range 0.0 .. 1.0.
+  # Returns the hue of the colour in the range 0.0 .. 1.0.
   def h
     @h
   end
-  # Sets the hue of the color in degrees. Colour is perceived as a wheel,
+  # Sets the hue of the colour in degrees. Colour is perceived as a wheel,
   # so values should be set properly even with negative degree values.
   def hue=(hh)
     hh = hh / 360.0
@@ -121,42 +121,42 @@ class Colour::HSL
 
     @h = Colour.normalize(hh)
   end
-  # Sets the hue of the color in the range 0.0 .. 1.0.
+  # Sets the hue of the colour in the range 0.0 .. 1.0.
   def h=(hh)
     @h = Colour.normalize(hh)
   end
-  # Returns the percentage of saturation of the color.
+  # Returns the percentage of saturation of the colour.
   def saturation
     @s * 100.0
   end
-  # Returns the saturation of the color in the range 0.0 .. 1.0.
+  # Returns the saturation of the colour in the range 0.0 .. 1.0.
   def s
     @s
   end
-  # Sets the percentage of saturation of the color.
+  # Sets the percentage of saturation of the colour.
   def saturation=(ss)
     @s = Colour.normalize(ss / 100.0)
   end
-  # Sets the saturation of the color in the ragne 0.0 .. 1.0.
+  # Sets the saturation of the colour in the ragne 0.0 .. 1.0.
   def s=(ss)
     @s = Colour.normalize(ss)
   end
 
-  # Returns the percentage of luminosity of the color.
+  # Returns the percentage of luminosity of the colour.
   def luminosity
     @l * 100.0
   end
   alias lightness luminosity
-  # Returns the luminosity of the color in the range 0.0 .. 1.0.
+  # Returns the luminosity of the colour in the range 0.0 .. 1.0.
   def l
     @l
   end
-  # Sets the percentage of luminosity of the color.
+  # Sets the percentage of luminosity of the colour.
   def luminosity=(ll)
     @l = Colour.normalize(ll / 100.0)
   end
   alias lightness= luminosity= ;
-  # Sets the luminosity of the color in the ragne 0.0 .. 1.0.
+  # Sets the luminosity of the colour in the ragne 0.0 .. 1.0.
   def l=(ll)
     @l = Colour.normalize(ll)
   end
@@ -169,8 +169,8 @@ class Colour::HSL
     "HSL [%.2f deg, %.2f%%, %.2f%%]" % [ hue, saturation, luminosity ]
   end
 
-  # Mix the mask color (which will be converted to an HSL color) with the
-  # current color at the stated mix percentage as a decimal value.
+  # Mix the mask colour (which will be converted to an HSL colour) with the
+  # current colour at the stated mix percentage as a decimal value.
   #
   # NOTE:: This differs from Colour::RGB#mix_with.
   def mix_with(colour, mix_percent = 0.5)
@@ -188,7 +188,7 @@ class Colour::HSL
 
   # This algorithm calculates based on a mixture of the saturation and
   # luminance, and then takes the RGB values from the hue + 1/3, hue, and
-  # hue - 1/3 positions in a circular representation of color divided into
+  # hue - 1/3 positions in a circular representation of colour divided into
   # four parts (confusing, I know, but it's the way that it works). See
   # #hue_to_rgb for more information.
   def compute_fvd_rgb
@@ -209,7 +209,7 @@ class Colour::HSL
     [ 2.0 * l - t, t ]
   end
 
-  # In HSL, hues are referenced as degrees in a color circle. The flow
+  # In HSL, hues are referenced as degrees in a colour circle. The flow
   # itself is endless; therefore, we can rotate around. The only thing our
   # implementation restricts is that you should not be > 1.0.
   def rotate_hue(h)
@@ -219,7 +219,7 @@ class Colour::HSL
   end
 
   # We calculate the interaction of the saturation/luminance mix (calculated
-  # earlier) based on the position of the hue in the circular color space
+  # earlier) based on the position of the hue in the circular colour space
   # divided into quadrants. Our hue range is [0, 1), not [0, 360º).
   #
   # - The first quadrant covers the first 60º [0, 60º].

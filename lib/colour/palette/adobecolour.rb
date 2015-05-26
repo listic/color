@@ -2,7 +2,7 @@ require 'colour/palette'
 
 # A class that can read an Adobe Colour palette file (used for Photoshop
 # swatches) and provide a Hash-like interface to the contents. Not all
-# color formats in ACO files are supported. Based largely off the
+# colour formats in ACO files are supported. Based largely off the
 # information found by Larry Tesler[http://www.nomodes.com/aco.html].
 #
 # Not all Adobe Colour files have named colours; all named entries are
@@ -16,7 +16,7 @@ require 'colour/palette'
 # AdobeColour palettes are always indexable by insertion order (an integer
 # key).
 #
-# Version 2 palettes use UTF-16 color names.
+# Version 2 palettes use UTF-16 colour names.
 class Colour::Palette::AdobeColour
   include Enumerable
 
@@ -177,14 +177,14 @@ class Colour::Palette::AdobeColour
     end
   end
 
-  # Provides the color or colours at the provided selectors.
+  # Provides the colour or colours at the provided selectors.
   def values_at(*selectors)
     @colours.values_at(*selectors)
   end
 
-  # If a Numeric +key+ is provided, the single color value at that position
-  # will be returned. If a String +key+ is provided, the color set (an
-  # array) for that color name will be returned.
+  # If a Numeric +key+ is provided, the single colour value at that position
+  # will be returned. If a String +key+ is provided, the colour set (an
+  # array) for that colour name will be returned.
   def [](key)
     if key.kind_of?(Numeric)
       @colours[key]
@@ -193,12 +193,12 @@ class Colour::Palette::AdobeColour
     end
   end
 
-  # Loops through each color.
+  # Loops through each colour.
   def each
     @colours.each { |el| yield el }
   end
 
-  # Loops through each named color set.
+  # Loops through each named colour set.
   def each_name #:yields colour_name, colour_set:#
     @names.each { |colour_name, colour_set| yield colour_name, colour_set }
   end

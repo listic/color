@@ -1,6 +1,6 @@
 # -*- ruby encoding: utf-8 -*-
 
-require 'color'
+require 'colour'
 require 'color/palette/adobecolour'
 require 'minitest_helper'
 
@@ -353,7 +353,7 @@ QwBNAFkASwAAAA0JxA2sEZQF3AAAAAsAVQBOAEsATgBPAFcATgAgADEAMwAA
         v[0, 2] = [ 322 ].pack("n") # break the version
         assert_raises(RuntimeError) { AdobeColour.new(v) }
         v = o.dup
-        v[2, 2] = [ 217 ].pack("n") # break the color count
+        v[2, 2] = [ 217 ].pack("n") # break the colour count
         assert_raises(IndexError) { @aco = AdobeColour.new(v) }
         v = o.dup
         v[14, 2] = [ 99 ].pack("n") # break the NULL before the name
